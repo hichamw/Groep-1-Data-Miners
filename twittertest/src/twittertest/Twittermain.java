@@ -16,7 +16,7 @@ public class Twittermain {
 	
 	public static void main(String[] args) throws TwitterException, IOException
 	{
-		
+		System.out.println("test");
 	    ConfigurationBuilder cb = new ConfigurationBuilder();
 	    cb.setDebugEnabled(true);
 		cb.setOAuthConsumerKey("7XiGR9ZyIS4k8aTy3mhPndlJ6");

@@ -1,0 +1,3 @@
+[Wed Mar 04 15:02:53 CET 2015]Establishing connection.
+[Wed Mar 04 15:03:25 CET 2015]Connection established.
+[Wed Mar 04 15:03:25 CET 2015]Receiving status stream.

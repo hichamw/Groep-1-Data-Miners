@@ -29,7 +29,7 @@ public class Twittermain {
 		Twitter twitter = tf.getInstance();
 		try {
 			FileOutputStream fos = new FileOutputStream("output.txt"); 
-            Query query = new Query("Amsterdam");
+            Query query = new Query("euromast");
             QueryResult result;
             result = twitter.search(query);
             List<Status> tweets = result.getTweets();

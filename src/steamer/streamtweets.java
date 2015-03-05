@@ -14,17 +14,13 @@ import java.io.*;
 import java.util.*;
 
 public class streamtweets {
-	 public static void main(String[] args) throws FileNotFoundException {
+	 public static void main(String[] args) {
 	        ConfigurationBuilder cb = new ConfigurationBuilder();
 	        cb.setDebugEnabled(true);
 	        cb.setOAuthConsumerKey("1HX1bJPnulPUUePvGXv1m4pyg");
 	        cb.setOAuthConsumerSecret("PJlfjB0LHRyjgoShDn3qDwQj4PVpSOpPwHCAo4usjq1JRYT2UH");
 	        cb.setOAuthAccessToken("118344135-qmUl1sKs0xDP0ek7e5SJ4MSL3TmN8IoRHUdDj6KV");
 	        cb.setOAuthAccessTokenSecret("Shmwd9wBQY5890kITQnaHbna1Kmcgh7ZVNUeua1KdogLO");
-	        FileOutputStream fos = new FileOutputStream("output.txt"); 
-	        StreamOutput streamoutput = new StreamOutput(fos, System.out);
-            System.setOut(streamoutput);
-            
 	        TwitterStream twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
 
 	        StatusListener listener = new StatusListener() {

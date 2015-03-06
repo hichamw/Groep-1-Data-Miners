@@ -10,20 +10,24 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
-import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class streamtweets {
-	 public static void main(String[] args) {
-	        ConfigurationBuilder cb = new ConfigurationBuilder();
+public class StreamTweets {
+	 private ConfigurationBuilder cb = new ConfigurationBuilder();
+	 
+	 public void authenticate(){
 	        cb.setDebugEnabled(true);
 	        cb.setOAuthConsumerKey("1HX1bJPnulPUUePvGXv1m4pyg");
 	        cb.setOAuthConsumerSecret("PJlfjB0LHRyjgoShDn3qDwQj4PVpSOpPwHCAo4usjq1JRYT2UH");
 	        cb.setOAuthAccessToken("118344135-qmUl1sKs0xDP0ek7e5SJ4MSL3TmN8IoRHUdDj6KV");
 	        cb.setOAuthAccessTokenSecret("Shmwd9wBQY5890kITQnaHbna1Kmcgh7ZVNUeua1KdogLO");
-	        TwitterStream twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
-
-	        StatusListener listener = new StatusListener() {
+	        	 
+	 }
+	 
+	 public void stream(Database database){
+		 TwitterStream twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
+		 StatusListener listener = new StatusListener() {
 	        	
 	            @Override
 	            public void onException(Exception arg0) {
@@ -45,9 +49,8 @@ public class streamtweets {
 
 	            @Override
 	            public void onStatus(Status status) {
+	            	
 	                User user = status.getUser();
-	                
-	                // gets Username
 	                String name = user.getName();
 	                System.out.println(name);
 	                String username = status.getUser().getScreenName();
@@ -58,11 +61,15 @@ public class streamtweets {
 	                System.out.println(language);
 	                long tweetId = status.getId(); 
 	                System.out.println(tweetId);
-	                Date time = status.getCreatedAt();
+	                Date dateTime = status.getCreatedAt();
+	                SimpleDateFormat sdf = new SimpleDateFormat();
+	                sdf.applyPattern("dd/MM/yyyy HH:mm z");
+	                String time = sdf.format(dateTime);   
 	                System.out.println(time);
 	                String content = status.getText();
 	                System.out.println(content +"\n");
 	                System.out.println("-------------------------");
+	                database.insertIntoDatabase(username, name, profileLocation, language, time, content);
 
 	            }
 
@@ -81,12 +88,12 @@ public class streamtweets {
 	        };
 	        FilterQuery fq = new FilterQuery();
 	    
-	        String keywords[] = {"euromast"};
+	        String keywords[] = {"swag"};
 
 	        fq.track(keywords);
 
 	        twitterStream.addListener(listener);
 	        twitterStream.filter(fq);  
-
-	    }
+		 
+	 }
 }

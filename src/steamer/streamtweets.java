@@ -52,23 +52,23 @@ public class StreamTweets {
 	            	
 	                User user = status.getUser();
 	                String name = user.getName();
-	                System.out.println(name);
 	                String username = status.getUser().getScreenName();
-	                System.out.println(username);
 	                String profileLocation = user.getLocation();
-	                System.out.println(profileLocation);
 	                String language = user.getLang();
-	                System.out.println(language);
 	                long tweetId = status.getId(); 
-	                System.out.println(tweetId);
 	                Date dateTime = status.getCreatedAt();
 	                SimpleDateFormat sdf = new SimpleDateFormat();
 	                sdf.applyPattern("dd/MM/yyyy HH:mm z");
 	                String time = sdf.format(dateTime);   
-	                System.out.println(time);
 	                String content = status.getText();
-	                System.out.println(content +"\n");
-	                System.out.println("-------------------------");
+	                
+	                username = database.makeCompatible(username);
+	                name = database.makeCompatible(name);
+	                profileLocation = database.makeCompatible(profileLocation);
+	                language = database.makeCompatible(language);
+	                time = database.makeCompatible(time);
+	                content = database.makeCompatible(content);
+	                             
 	                database.insertIntoDatabase(username, name, profileLocation, language, time, content);
 
 	            }
@@ -93,7 +93,7 @@ public class StreamTweets {
 	        fq.track(keywords);
 
 	        twitterStream.addListener(listener);
-	        twitterStream.filter(fq);  
+	        twitterStream.filter(fq); 
 		 
 	 }
 }

@@ -88,7 +88,7 @@ public class StreamTweets {
 	        };
 	        FilterQuery fq = new FilterQuery();
 	    
-	        String keywords[] = {"swag"};
+	        String keywords[] = {"euromast"};
 
 	        fq.track(keywords);
 

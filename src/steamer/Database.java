@@ -4,7 +4,6 @@ import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Date;
 
 
 public class Database {
@@ -57,11 +56,13 @@ public class Database {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
-            
+            connectToDatabase();
+            insertIntoDatabase(username, name, location, language, time, content);
         }
 		
 		
 	}
+	
 	
 
 }

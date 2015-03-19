@@ -11,10 +11,10 @@ public class Database {
 	private int insertCounter = 0;
 	
 	public void connectToDatabase(){
-			String host = "sql3.freemysqlhosting.net";
-			String DBName = "sql369437";
-			String user = "sql369437";
-			String password = "yH1%hH1*";
+			String host = "145.24.222.208";
+			String DBName = "dataminers";
+			String user = "server";
+			String password = "dataminer";
 			String encPassword = URLEncoder.encode(password);
 			try {
 	            conn = DriverManager.getConnection("jdbc:mysql://" + host +"/"+ DBName +"?user=" + user + "&password=" + encPassword + "");
@@ -30,18 +30,16 @@ public class Database {
 		
 	}
 	
-	public String makeCompatible(String importedString){
-		String exportString;
-		exportString = importedString.replace("'", "''");
-		return exportString;
-		
-	}
+
 	
 	public void insertIntoDatabase(String username, String name, String location, String language, String time, String content){
 		try {
-			conn.createStatement().execute("INSERT INTO Twitter(Username, Name, Location, Language, Time, Content) VALUES ('" + username + "','" + name + "','" + location + "','" + language + "','" + time + "','" + content + "')");
+			
+			conn.createStatement().execute("INSERT IGNORE INTO twitter_user(Username, Name, Location, Language) VALUES ('" + username + "','" + name + "','" + location + "','" + language + "')");
+			conn.createStatement().execute("INSERT INTO message(Date, Content, TWITTER_USER_Username) VALUES (('" + time + "','" + content + "','" + username + "')");
 			insertCounter++;
 			System.out.println(insertCounter + " sessions inserted into the Database.");
+			conn.close();
 			
            
         } catch (SQLException ex) {
@@ -56,8 +54,6 @@ public class Database {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
-            connectToDatabase();
-            insertIntoDatabase(username, name, location, language, time, content);
         }
 		
 		

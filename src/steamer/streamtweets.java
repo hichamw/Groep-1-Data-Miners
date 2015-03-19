@@ -16,6 +16,7 @@ import java.util.*;
 public class StreamTweets {
 	 private ConfigurationBuilder cb = new ConfigurationBuilder();
 	 
+	 
 	 public void authenticate(){
 	        cb.setDebugEnabled(true);
 	        cb.setOAuthConsumerKey("1HX1bJPnulPUUePvGXv1m4pyg");
@@ -26,6 +27,8 @@ public class StreamTweets {
 	 }
 	 
 	 public void stream(Database database){
+         SimpleDateFormat sdf = new SimpleDateFormat();
+         sdf.applyPattern("yyyy/MM/dd HH:mm:ss");
 		 TwitterStream twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
 		 StatusListener listener = new StatusListener() {
 	        	
@@ -55,20 +58,19 @@ public class StreamTweets {
 	                String username = status.getUser().getScreenName();
 	                String profileLocation = user.getLocation();
 	                String language = user.getLang();
-	                long tweetId = status.getId(); 
 	                Date dateTime = status.getCreatedAt();
-	                SimpleDateFormat sdf = new SimpleDateFormat();
-	                sdf.applyPattern("dd/MM/yyyy HH:mm z");
+
 	                String time = sdf.format(dateTime);   
 	                String content = status.getText();
 	                
-	                username = database.makeCompatible(username);
-	                name = database.makeCompatible(name);
-	                profileLocation = database.makeCompatible(profileLocation);
-	                language = database.makeCompatible(language);
-	                time = database.makeCompatible(time);
-	                content = database.makeCompatible(content);
-	                             
+	                username = makeCompatible(username);
+	                name = makeCompatible(name);
+	                profileLocation = makeCompatible(profileLocation);
+	                language =makeCompatible(language);
+	                time = makeCompatible(time);
+	                content = makeCompatible(content);
+	                
+	                database.connectToDatabase();             
 	                database.insertIntoDatabase(username, name, profileLocation, language, time, content);
 
 	            }
@@ -96,4 +98,11 @@ public class StreamTweets {
 	        twitterStream.filter(fq); 
 		 
 	 }
+	 
+		public String makeCompatible(String importedString){
+			String exportString;
+			exportString = importedString.replace("'", "''");
+			return exportString;
+			
+		}
 }

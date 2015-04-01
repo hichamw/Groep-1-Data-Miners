@@ -1,6 +1,7 @@
 package steamer;
 
 import twitter4j.FilterQuery;
+import twitter4j.GeoLocation;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -59,7 +60,9 @@ public class StreamTweets {
 	                String profileLocation = user.getLocation();
 	                String language = user.getLang();
 	                Date dateTime = status.getCreatedAt();
-
+	                GeoLocation geolocation = status.getGeoLocation();
+					double tweetLatitude = geolocation.getLatitude();
+					double tweetLongitude = geolocation.getLongitude();
 	                String time = sdf.format(dateTime);   
 	                String content = status.getText();
 	                
@@ -69,9 +72,8 @@ public class StreamTweets {
 	                language =makeCompatible(language);
 	                time = makeCompatible(time);
 	                content = makeCompatible(content);
-	                
 	                             
-	                database.insertIntoDatabase(username, name, profileLocation, language, time, content);
+	                database.insertIntoDatabase(username, name, profileLocation, language, time, content, tweetLatitude,tweetLongitude);
 
 	            }
 

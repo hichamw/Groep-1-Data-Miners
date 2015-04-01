@@ -32,11 +32,11 @@ public class Database {
 	
 
 	
-	public void insertIntoDatabase(String username, String name, String location, String language, String time, String content){
+	public void insertIntoDatabase(String username, String name, String location, String language, String time, String content, double tweetLatitude, double tweetLongitude){
 		try {
 			
 			conn.createStatement().execute("INSERT INTO twitter_user(Username, Name, Location, Lang) VALUES ('" + username + "','" + name + "','" + location + "','" + language + "') ON DUPLICATE KEY UPDATE Username='" + username + "'");
-			conn.createStatement().execute("INSERT INTO message(Date, Content, TWITTER_USER_Username) VALUES ('" + time + "','" + content + "','" + username + "')");
+			conn.createStatement().execute("INSERT INTO message(Date, Content, TWITTER_USER_Username, Latitude, Longitude) VALUES ('" + time + "','" + content + "','" + username + "','" + tweetLatitude + "','" + tweetLongitude + "')");
 			insertCounter++;
 			System.out.println(insertCounter + " sessions inserted into the Database.");
 			
@@ -55,7 +55,7 @@ public class Database {
             System.out.println("VendorError: " + ex.getErrorCode());
             
             connectToDatabase();
-            insertIntoDatabase(username, name, location, language, time, content);
+            insertIntoDatabase(username, name, location, language, time, content, tweetLongitude, tweetLongitude);
         }
 		
 		

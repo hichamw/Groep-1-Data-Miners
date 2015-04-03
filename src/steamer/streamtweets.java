@@ -72,7 +72,10 @@ public class StreamTweets {
 	                language =makeCompatible(language);
 	                time = makeCompatible(time);
 	                content = makeCompatible(content);
+	                
+	                
 	                             
+	                database.connectToDatabase();
 	                database.insertIntoDatabase(username, name, profileLocation, language, time, content, tweetLatitude,tweetLongitude);
 
 	            }

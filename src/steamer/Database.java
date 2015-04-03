@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class Database {
 	private Connection conn = null;
 	private int insertCounter = 0;
+
 	
 	public void connectToDatabase(){
 			String host = "145.24.222.208:8124";
@@ -37,8 +38,10 @@ public class Database {
 			
 			conn.createStatement().execute("INSERT INTO twitter_user(Username, Name, Location, Lang) VALUES ('" + username + "','" + name + "','" + location + "','" + language + "') ON DUPLICATE KEY UPDATE Username='" + username + "'");
 			conn.createStatement().execute("INSERT INTO message(Date, Content, TWITTER_USER_Username, Latitude, Longitude) VALUES ('" + time + "','" + content + "','" + username + "','" + tweetLatitude + "','" + tweetLongitude + "')");
-			insertCounter++;
+			conn.close();
+			insertCounter++;	
 			System.out.println(insertCounter + " sessions inserted into the Database.");
+			
 			
            
         } catch (SQLException ex) {
@@ -54,13 +57,12 @@ public class Database {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
             
-            connectToDatabase();
-            insertIntoDatabase(username, name, location, language, time, content, tweetLongitude, tweetLongitude);
         }
 		
 		
 	}
 	
+
 	
 
 }

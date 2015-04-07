@@ -17,7 +17,7 @@ import java.util.*;
 public class StreamTweets {
 	 private ConfigurationBuilder cb = new ConfigurationBuilder();
 	 
-	 
+	 //These are the OAuth keys used to access the twitter data
 	 public void authenticate(){
 	        cb.setDebugEnabled(true);
 	        cb.setOAuthConsumerKey("1HX1bJPnulPUUePvGXv1m4pyg");
@@ -27,6 +27,7 @@ public class StreamTweets {
 	        	 
 	 }
 	 
+	 //this method gets the tweet data and passes it on to the database class
 	 public void stream(Database database){
          SimpleDateFormat sdf = new SimpleDateFormat();
          sdf.applyPattern("yyyy/MM/dd HH:mm:ss");
@@ -53,7 +54,7 @@ public class StreamTweets {
 
 	            @Override
 	            public void onStatus(Status status) {
-	            	
+	            	//this is the different data that the program gets from twitter
 	                User user = status.getUser();
 	                String name = user.getName();
 	                String username = status.getUser().getScreenName();
@@ -94,7 +95,8 @@ public class StreamTweets {
 
 	        };
 	        FilterQuery fq = new FilterQuery();
-	    
+	        
+	        //this is the keyword that the tweets are filtered on
 	        String keywords[] = {"euromast"};
 
 	        fq.track(keywords);
@@ -103,7 +105,7 @@ public class StreamTweets {
 	        twitterStream.filter(fq); 
 		 
 	 }
-	 
+	 	//This method makes the data compatible with our database
 		public String makeCompatible(String importedString){
 			String exportString;
 			exportString = importedString.replace("'", "''");

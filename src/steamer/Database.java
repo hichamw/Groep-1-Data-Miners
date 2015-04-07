@@ -10,7 +10,7 @@ public class Database {
 	private Connection conn = null;
 	private int insertCounter = 0;
 
-	
+	//connection to database
 	public void connectToDatabase(){
 			String host = "145.24.222.208:8124";
 			String DBName = "dataminers";
@@ -32,7 +32,7 @@ public class Database {
 	}
 	
 
-	
+	//this method inserts the data into the database using queries that contain the information that is gathered in the streamtweets class
 	public void insertIntoDatabase(String username, String name, String location, String language, String time, String content, double tweetLatitude, double tweetLongitude){
 		try {
 			
@@ -43,7 +43,7 @@ public class Database {
 			System.out.println(insertCounter + " sessions inserted into the Database.");
 			
 			
-           
+        //error catching
         } catch (SQLException ex) {
             // handle any errors
         	System.out.println("username: " + username);
